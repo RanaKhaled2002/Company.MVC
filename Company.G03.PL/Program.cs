@@ -1,3 +1,5 @@
+using Company.G03.BLL.Interfaces;
+using Company.G03.BLL.Repostiories;
 using Company.G03.DAL.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +12,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 }); // Allow Dependency Injection For AppDbContext
+
+builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 
 var app = builder.Build();
 

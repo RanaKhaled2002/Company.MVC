@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Company.G03.BLL.Repostiories
 {
-    internal class DepartmentRepoeitory : IDepartemntRepository
+    public class DepartmentRepository : IDepartmentRepository
     {
         private readonly AppDbContext _Context;
 
-        public DepartmentRepoeitory(AppDbContext Context)
+        public DepartmentRepository(AppDbContext Context)
         {
             _Context = Context; // Ask CLR Create Object From AppDbContext
         }
