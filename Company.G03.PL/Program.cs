@@ -1,7 +1,11 @@
+using Company.G03.DAL.Data.Contexts;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<AppDbContext>(); // Allow Dependency Injection For AppDbContext
 
 var app = builder.Build();
 
