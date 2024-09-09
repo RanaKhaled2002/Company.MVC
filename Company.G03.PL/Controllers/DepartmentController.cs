@@ -1,4 +1,5 @@
 ﻿using Company.G03.BLL.Interfaces;
+using Company.G03.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Company.G03.PL.Controllers
@@ -12,10 +13,32 @@ namespace Company.G03.PL.Controllers
             _departmentRepository = departmentRepository;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             var Department = _departmentRepository.GetAll();
             return View(Department);
+        }
+
+        [HttpGet]
+        public IActionResult create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult create(Department model)
+        {
+            if (ModelState.IsValid)
+            {
+                var Count = _departmentRepository.Add(model);
+                if (Count > 0)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+           
+            return View(model);
         }
     }
 }
