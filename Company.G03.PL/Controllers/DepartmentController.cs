@@ -41,6 +41,7 @@ namespace Company.G03.PL.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public IActionResult details(int? id)
         {
             if (id is null) return BadRequest();
@@ -50,7 +51,33 @@ namespace Company.G03.PL.Controllers
             if(Department is null) return NotFound();
 
             return View(Department);
+        }
 
+        [HttpGet]
+        public IActionResult update(int? id)
+        {
+            if(id is null) return BadRequest();
+
+            var Department = _departmentRepository.Get(id.Value);
+
+            if(Department is null) return NotFound();
+
+            return View(Department);
+        }
+
+        [HttpPost]
+        public IActionResult update(Department model)
+        {
+            if (ModelState.IsValid)
+            {
+                var Count = _departmentRepository.Update(model);
+                if (Count > 0)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+
+            return View(model);
         }
     }
 }

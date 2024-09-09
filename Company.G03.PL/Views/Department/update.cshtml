@@ -1,0 +1,31 @@
+﻿@model Department
+@{
+    ViewData["Title"] = "update";
+}
+
+<h1 class="py-3">Update Department</h1>
+
+<form asp-action="update">
+    <div class="from-group py-3">
+        <label asp-for="Code" class="form-label"></label>
+        <input asp-for="Code" class="form-control" />
+        <span asp-validation-for="Code" class="text-danger"></span>
+    </div>
+
+    <div class="from-group py-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="from-group py-3">
+        <label asp-for="DateOfCreation" class="form-label"></label>
+        <input asp-for="DateOfCreation" class="form-control" />
+    </div>
+
+    <div class="py-3">
+        <input type="submit" value="Update" class="btn btn-warning text-white" />
+        <a asp-action="Index" class="btn btn-light">Back To List</a>
+    </div>
+</form>
+
