@@ -1,0 +1,27 @@
+﻿@model Department
+@{
+    ViewData["Title"] = "delete";
+}
+<h1 class="py-3">Create Department Page </h1>
+<form asp-action="delete">
+    <div class="from-group py-3">
+        <label asp-for="Code" class="form-label"></label>
+        <input asp-for="Code" class="form-control" readonly/>
+    </div>
+
+    <div class="from-group py-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" readonly/>
+    </div>
+
+    <div class="from-group py-3">
+        <label asp-for="DateOfCreation" class="form-label"></label>
+        <input asp-for="DateOfCreation" class="form-control" readonly />
+    </div>
+
+    <div class="py-3">
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-light">Back To List</a>
+    </div>
+</form>
+

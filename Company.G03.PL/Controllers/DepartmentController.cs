@@ -79,5 +79,32 @@ namespace Company.G03.PL.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult delete(int? id)
+        {
+            if (id is null) return BadRequest();
+
+            var Department = _departmentRepository.Get(id.Value);
+
+            if (Department is null) return NotFound();
+            
+            return View(Department);
+        }
+
+        [HttpPost]
+        public IActionResult delete(Department model)
+        {
+            if (ModelState.IsValid)
+            {
+                var Count = _departmentRepository.Delete(model);
+                if (Count > 0)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+
+            return View(model);
+        }
     }
 }
