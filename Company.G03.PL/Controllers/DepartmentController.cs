@@ -40,5 +40,17 @@ namespace Company.G03.PL.Controllers
            
             return View(model);
         }
+
+        public IActionResult details(int? id)
+        {
+            if (id is null) return BadRequest();
+
+           var Department =  _departmentRepository.Get(id.Value);
+            
+            if(Department is null) return NotFound();
+
+            return View(Department);
+
+        }
     }
 }
