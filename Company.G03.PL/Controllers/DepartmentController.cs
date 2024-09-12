@@ -43,7 +43,7 @@ namespace Company.G03.PL.Controllers
         }
 
         [HttpGet]
-        public IActionResult details(int? id)
+        public IActionResult details(int? id, string ViewName = "details")
         {
             if (id is null) return BadRequest();
 
@@ -51,19 +51,21 @@ namespace Company.G03.PL.Controllers
             
             if(Department is null) return NotFound();
 
-            return View(Department);
+            return View(ViewName,Department);
         }
 
         [HttpGet]
         public IActionResult update(int? id)
         {
-            if(id is null) return BadRequest();
+            //if(id is null) return BadRequest();
 
-            var Department = _departmentRepository.Get(id.Value);
+            //var Department = _departmentRepository.Get(id.Value);
 
-            if(Department is null) return NotFound();
+            //if(Department is null) return NotFound();
 
-            return View(Department);
+            //return View(Department);
+
+            return details(id,"update");
         }
 
         [HttpPost]
@@ -93,13 +95,14 @@ namespace Company.G03.PL.Controllers
         [HttpGet]
         public IActionResult delete(int? id)
         {
-            if (id is null) return BadRequest();
+            //if (id is null) return BadRequest();
 
-            var Department = _departmentRepository.Get(id.Value);
+            //var Department = _departmentRepository.Get(id.Value);
 
-            if (Department is null) return NotFound();
-            
-            return View(Department);
+            //if (Department is null) return NotFound();
+
+            //return View(Department);
+            return details(id, "delete");
         }
 
         [HttpPost]
