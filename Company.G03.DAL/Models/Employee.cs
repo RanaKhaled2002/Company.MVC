@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Company.G03.DAL.Models
 {
-    public  class Employee
+    public  class Employee : BaseClass
     {
-        public int Id { get; set; }
 
         [Required(ErrorMessage ="Name Is Required")]
         public string Name { get; set; }

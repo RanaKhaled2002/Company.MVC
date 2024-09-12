@@ -14,6 +14,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 }); // Allow Dependency Injection For AppDbContext
 
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeePepository>();
 
 var app = builder.Build();
 

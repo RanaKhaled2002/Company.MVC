@@ -9,41 +9,12 @@ using System.Threading.Tasks;
 
 namespace Company.G03.BLL.Repostiories
 {
-    public class DepartmentRepository : IDepartmentRepository
+    public class DepartmentRepository : GenericRepository<Department>,IDepartmentRepository
     {
-        private readonly AppDbContext _Context;
 
-        public DepartmentRepository(AppDbContext Context)
+        public DepartmentRepository(AppDbContext Context) : base(Context)
         {
-            _Context = Context; // Ask CLR Create Object From AppDbContext
-        }
-
-        public IEnumerable<Department> GetAll()
-        {
-            return _Context.Departments.ToList();
-        }
-
-        public Department Get(int id)
-        {
-            return _Context.Departments.Find(id);
-        }
-
-        public int Add(Department entity)
-        {
-            _Context.Departments.Add(entity);
-            return _Context.SaveChanges();
-        }
-
-        public int Update(Department entity)
-        {
-            _Context.Departments.Update(entity);
-            return _Context.SaveChanges();
-        }
-
-        public int Delete(Department entity)
-        {
-            _Context.Departments.Remove(entity);
-            return _Context.SaveChanges();
+           // Ask CLR Create Object From AppDbContext
         }
     }
 }
