@@ -1,11 +1,20 @@
 ﻿@model Department
 @{
+    bool Error = ViewData.ModelState.Values.Any(V => V.Errors.Count > 0);
+}
+@{
     ViewData["Title"] = "update";
 }
 
 <h1 class="py-3">Update Department</h1>
 
 <form asp-action="update">
+
+    @if(Error)
+    {
+        <div asp-validation-summary="All" class="alert alert-danger"></div>
+    }
+
     <div class="from-group py-3">
         <label asp-for="Code" class="form-label"></label>
         <input asp-for="Code" class="form-control" />
