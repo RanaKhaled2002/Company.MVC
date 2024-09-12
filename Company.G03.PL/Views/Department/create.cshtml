@@ -5,22 +5,8 @@
 
 <h1 class="py-3">Create Department Page </h1>
 <form asp-action="create">
-    <div class="from-group py-3">
-        <label asp-for="Code" class="form-label"></label>
-        <input asp-for="Code"  class="form-control"/>
-        <span asp-validation-for="Code" class="text-danger"></span>
-    </div>
 
-    <div class="from-group py-3">
-        <label asp-for="Name" class="form-label"></label>
-        <input asp-for="Name" class="form-control"/>
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
-
-    <div class="from-group py-3">
-        <label asp-for="DateOfCreation" class="form-label"></label>
-        <input asp-for="DateOfCreation" class="form-control"/>
-    </div>
+    <partial name="ParitalView/CreateUpdateDepartment" />
 
     <div class="py-3">
         <input type="submit" value="Create" class="btn btn-primary" />

@@ -5,20 +5,8 @@
 
 <h1 class="py-3">Department Details</h1>
 <div>
-    <div class="from-group py-3">
-        <label asp-for="Code" class="form-label"></label>
-        <input readonly asp-for="Code" class="form-control" />
-    </div>
-
-    <div class="from-group py-3">
-        <label asp-for="Name" class="form-label"></label>
-        <input readonly asp-for="Name" class="form-control" />
-    </div>
-
-    <div class="from-group py-3">
-        <label asp-for="DateOfCreation" class="form-label"></label>
-        <input readonly asp-for="DateOfCreation" class="form-control" />
-    </div>
+    
+    <partial name="ParitalView/DetailsDeleteDepartment"/>
 
     <div class="py-3">
         <a asp-action="update" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
