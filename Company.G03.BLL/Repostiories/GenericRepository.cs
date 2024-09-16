@@ -1,6 +1,7 @@
 ﻿using Company.G03.BLL.Interfaces;
 using Company.G03.DAL.Data.Contexts;
 using Company.G03.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,11 @@ namespace Company.G03.BLL.Repostiories
 
         public IEnumerable<T> GetAll()
         {
-           return _context.Set<T>().ToList();
+            if(typeof(T)==typeof(Employee))
+            {
+                return (IEnumerable<T>) _context.Employees.Include(E => E.WorkFor).AsNoTracking().ToList();
+            }
+           return _context.Set<T>().AsNoTracking().ToList();
         }
 
         public T Get(int id)

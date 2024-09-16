@@ -2,6 +2,9 @@
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@{
+    var department = new  SelectList(ViewData["Department"] as IEnumerable<Department>,nameof(Department.Id),nameof(Department.Name));
+}
 <div class="from-group py-3">
     <label asp-for="Name" class="form-label"></label>
     <input asp-for="Name" class="form-control" />
@@ -46,4 +49,11 @@
 <div class="from-group py-3">
     <label asp-for="HiringDate" class="form-label"></label>
     <input asp-for="HiringDate" class="form-control" />
+</div>
+
+<div class="from-group py-3">
+    <label asp-for="WorkFor" class="form-label"></label>
+    <select asp-for="WorkForId" asp-items="@department" class="form-control">
+        <option value="@null">-- Select Department --</option>
+    </select>
 </div>
