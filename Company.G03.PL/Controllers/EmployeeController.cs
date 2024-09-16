@@ -16,6 +16,13 @@ namespace Company.G03.PL.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            #region View Dictionary
+            //string Message = "Hello World";
+            //ViewData["Message"] = Message + " From View Data";
+            //ViewBag.Message01 = Message + " From View Bag";
+            //TempData["Message02"] = Message + " From Temp Data"; 
+            #endregion
+
             var Employee = _employeeRepository.GetAll();
             return View(Employee);
         }
@@ -35,8 +42,13 @@ namespace Company.G03.PL.Controllers
                 var Count = _employeeRepository.Add(model);
                 if (Count > 0)
                 {
-                    return RedirectToAction(nameof(Index));
+                    TempData["Message"] = "Employee Is Created Successfully";
                 }
+                else
+                {
+                    TempData["Message"] = "Employee Is Not Created Successfully";
+                }
+                return RedirectToAction(nameof(Index));
             }
 
             return View(model);

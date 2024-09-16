@@ -1,10 +1,31 @@
 ﻿@model IEnumerable<Employee>
 @{
     ViewData["Title"] = "Index";
+    // string s01 = ViewData["Message"] as string;
+    // string s02 = ViewBag.Message01;
 }
 
 <h1 class="py-3">All Employees</h1>
 <a asp-controller="Employee" asp-action="Create" class="btn btn-primary my-3">Create Employee</a>
+
+@* <div class="alert alert-danger">
+    <p>@s01</p>
+</div>
+
+<div class="alert alert-success">
+    <p>@s02</p>
+</div>
+
+<div class="alert alert-warning">
+    <p>@TempData["Message02"]</p>
+</div> *@
+
+@if(!string.IsNullOrEmpty(TempData["Message"] as string ))
+{
+    <div class="alert alert-success">
+        <p>@TempData["Message"]</p>
+    </div>
+}
 
 @if(@Model.Count()>0)
 {
