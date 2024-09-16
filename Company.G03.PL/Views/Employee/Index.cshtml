@@ -6,6 +6,19 @@
 }
 
 <h1 class="py-3">All Employees</h1>
+
+<form asp-action="Index">
+    <div class="row container w-75">
+        <div class="col-md-8">
+            <input placeholder="Search By Name" type="text" name="searchInput" id="searchInput" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <input type="submit" name="Search"  class="btn btn-success"/>
+        </div>
+    </div>
+</form>
+
 <a asp-controller="Employee" asp-action="Create" class="btn btn-primary my-3">Create Employee</a>
 
 @* <div class="alert alert-danger">

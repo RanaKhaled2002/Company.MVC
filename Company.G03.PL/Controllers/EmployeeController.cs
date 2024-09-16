@@ -15,8 +15,7 @@ namespace Company.G03.PL.Controllers
             _departmentRepository = departmentRepository;
         }
 
-        [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string searchInput)
         {
             #region View Dictionary
             //string Message = "Hello World";
@@ -24,8 +23,15 @@ namespace Company.G03.PL.Controllers
             //ViewBag.Message01 = Message + " From View Bag";
             //TempData["Message02"] = Message + " From Temp Data"; 
             #endregion
-
-            var Employee = _employeeRepository.GetAll();
+            var Employee = Enumerable.Empty<Employee>();
+            if(string.IsNullOrEmpty(searchInput))
+            {
+                Employee = _employeeRepository.GetAll();
+            }
+            else
+            {
+                Employee = _employeeRepository.GetByName(searchInput);
+            }
             return View(Employee);
         }
 

@@ -14,5 +14,6 @@ namespace Company.G03.BLL.Interfaces
         //int Add(Employee entity);
         //int Update(Employee entity);
         //int Delete(Employee entity);
+        IEnumerable<Employee> GetByName(string name);
     }
 }
