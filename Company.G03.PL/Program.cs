@@ -1,6 +1,7 @@
 using Company.G03.BLL.Interfaces;
 using Company.G03.BLL.Repostiories;
 using Company.G03.DAL.Data.Contexts;
+using Company.G03.PL.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeePepository>();
+
+#region Service
+builder.Services.AddScoped<IScopedService, ScopedService>();
+builder.Services.AddTransient<ITransientService, TransientService>();
+builder.Services.AddSingleton<ISingletonService, SingletonService>();
+
+#endregion
 
 var app = builder.Build();
 
