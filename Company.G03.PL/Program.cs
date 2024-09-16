@@ -1,6 +1,7 @@
 using Company.G03.BLL.Interfaces;
 using Company.G03.BLL.Repostiories;
 using Company.G03.DAL.Data.Contexts;
+using Company.G03.PL.Mapping.Employees;
 using Company.G03.PL.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeePepository>();
+builder.Services.AddAutoMapper(typeof(EmployeeProfile));
 
 #region Service
 builder.Services.AddScoped<IScopedService, ScopedService>();

@@ -29,7 +29,11 @@ namespace Company.G03.PL.Models
 
         public bool IsActive { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public DateTime HiringDate { get; set; }
+
+        public DateTime DateOfCreation { get; set; } = DateTime.Now;
 
         public int? WorkForId { get; set; } // FK
 

@@ -1,4 +1,5 @@
-﻿using Company.G03.BLL.Interfaces;
+﻿using AutoMapper;
+using Company.G03.BLL.Interfaces;
 using Company.G03.DAL.Models;
 using Company.G03.PL.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -10,11 +11,13 @@ namespace Company.G03.PL.Controllers
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IDepartmentRepository _departmentRepository;
+        private readonly IMapper _mapper;
 
-        public EmployeeController(IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository) 
+        public EmployeeController(IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository, IMapper mapper) 
         {
             _employeeRepository = employeeRepository;
             _departmentRepository = departmentRepository;
+            _mapper = mapper;
         }
 
         public IActionResult Index(string searchInput)
@@ -35,7 +38,8 @@ namespace Company.G03.PL.Controllers
             {
                 Employee = _employeeRepository.GetByName(searchInput);
             }
-            return View(Employee);
+            var emp = _mapper.Map<IEnumerable<EmployeeViewModel>>(Employee);
+            return View(emp);
         }
 
         [HttpGet]
@@ -52,22 +56,27 @@ namespace Company.G03.PL.Controllers
         {
             if (ModelState.IsValid)
             {
+                #region Manual Mapping
                 // Manual Mapping
 
-                Employee emp = new Employee()
-                {
-                    Id = model.Id,
-                    Name = model.Name,
-                    Age = model.Age,
-                    Address = model.Address,
-                    Salary = model.Salary,
-                    Email = model.Email,
-                    PhoneNumber = model.PhoneNumber,
-                    IsActive = model.IsActive,
-                    HiringDate = model.HiringDate,
-                    WorkFor = model.WorkFor,
-                    WorkForId = model.WorkForId
-                };
+                //Employee emp = new Employee()
+                //{
+                //    Id = model.Id,
+                //    Name = model.Name,
+                //    Age = model.Age,
+                //    Address = model.Address,
+                //    Salary = model.Salary,
+                //    Email = model.Email,
+                //    PhoneNumber = model.PhoneNumber,
+                //    IsActive = model.IsActive,
+                //    HiringDate = model.HiringDate,
+                //    WorkFor = model.WorkFor,
+                //    WorkForId = model.WorkForId
+                //}; 
+                #endregion
+
+                // Auto Mapping
+                var emp = _mapper.Map<Employee>(model);
 
                 var Count = _employeeRepository.Add(emp);
                 if (Count > 0)
@@ -84,16 +93,18 @@ namespace Company.G03.PL.Controllers
             return View(model);
         }
 
-        [HttpGet]
+        //[HttpGet]
         public IActionResult Details(int? id, string ViewName= "Details")
         {
             if (id is null) return BadRequest();
 
             var Employee = _employeeRepository.Get(id.Value);
 
-            if(Employee is null) return NotFound();
+            if (Employee is null) return NotFound();
 
-            return View(ViewName, Employee);
+            var emp = _mapper.Map<EmployeeViewModel>(Employee);
+
+            return View(ViewName, emp);
         }
 
         [HttpGet]
@@ -110,20 +121,26 @@ namespace Company.G03.PL.Controllers
         {
             try
             {
-                Employee emp = new Employee()
-                {
-                    Id = model.Id,
-                    Name = model.Name,
-                    Age = model.Age,
-                    Address = model.Address,
-                    Salary = model.Salary,
-                    Email = model.Email,
-                    PhoneNumber = model.PhoneNumber,
-                    IsActive = model.IsActive,
-                    HiringDate = model.HiringDate,
-                    WorkFor = model.WorkFor,
-                    WorkForId = model.WorkForId
-                };
+                #region Manual Mapping
+                //Employee emp = new Employee()
+                //{
+                //    Id = model.Id,
+                //    Name = model.Name,
+                //    Age = model.Age,
+                //    Address = model.Address,
+                //    Salary = model.Salary,
+                //    Email = model.Email,
+                //    PhoneNumber = model.PhoneNumber,
+                //    IsActive = model.IsActive,
+                //    HiringDate = model.HiringDate,
+                //    WorkFor = model.WorkFor,
+                //    WorkForId = model.WorkForId
+                //}; 
+                #endregion
+
+                // Auto Mapping
+                var emp = _mapper.Map<Employee>(model);
+
                 if (id != emp.Id) return BadRequest();
                 if (ModelState.IsValid)
                 {
@@ -154,20 +171,26 @@ namespace Company.G03.PL.Controllers
         {
             try
             {
-                Employee emp = new Employee()
-                {
-                    Id = model.Id,
-                    Name = model.Name,
-                    Age = model.Age,
-                    Address = model.Address,
-                    Salary = model.Salary,
-                    Email = model.Email,
-                    PhoneNumber = model.PhoneNumber,
-                    IsActive = model.IsActive,
-                    HiringDate = model.HiringDate,
-                    WorkFor = model.WorkFor,
-                    WorkForId = model.WorkForId
-                };
+                #region Manual Mapping
+                //Employee emp = new Employee()
+                //{
+                //    Id = model.Id,
+                //    Name = model.Name,
+                //    Age = model.Age,
+                //    Address = model.Address,
+                //    Salary = model.Salary,
+                //    Email = model.Email,
+                //    PhoneNumber = model.PhoneNumber,
+                //    IsActive = model.IsActive,
+                //    HiringDate = model.HiringDate,
+                //    WorkFor = model.WorkFor,
+                //    WorkForId = model.WorkForId
+                //}; 
+                #endregion
+
+                // Auto Mapping
+                var emp = _mapper.Map<Employee>(model);
+
                 if (id != emp.Id) return BadRequest();
                 if (ModelState.IsValid)
                 {
