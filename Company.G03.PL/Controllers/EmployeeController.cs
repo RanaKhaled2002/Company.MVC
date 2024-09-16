@@ -9,15 +9,19 @@ namespace Company.G03.PL.Controllers
 {
     public class EmployeeController : Controller
     {
-        private readonly IEmployeeRepository _employeeRepository;
-        private readonly IDepartmentRepository _departmentRepository;
+        //private readonly IEmployeeRepository _employeeRepository;
+        //private readonly IDepartmentRepository _departmentRepository;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public EmployeeController(IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository, IMapper mapper) 
+        public EmployeeController(/*IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository,*/ 
+            IMapper mapper,
+            IUnitOfWork unitOfWork) 
         {
-            _employeeRepository = employeeRepository;
-            _departmentRepository = departmentRepository;
+            //_employeeRepository = employeeRepository;
+            //_departmentRepository = departmentRepository;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index(string searchInput)
@@ -32,11 +36,11 @@ namespace Company.G03.PL.Controllers
             var Employee = Enumerable.Empty<Employee>();
             if(string.IsNullOrEmpty(searchInput))
             {
-                Employee = _employeeRepository.GetAll();
+                Employee = _unitOfWork.EmployeeRepository.GetAll();
             }
             else
             {
-                Employee = _employeeRepository.GetByName(searchInput);
+                Employee = _unitOfWork.EmployeeRepository.GetByName(searchInput);
             }
             var emp = _mapper.Map<IEnumerable<EmployeeViewModel>>(Employee);
             return View(emp);
@@ -45,7 +49,7 @@ namespace Company.G03.PL.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var Departments = _departmentRepository.GetAll();
+            var Departments = _unitOfWork.DepartmentRepository.GetAll();
             ViewData["Department"] = Departments;
             return View();
         }
@@ -78,7 +82,7 @@ namespace Company.G03.PL.Controllers
                 // Auto Mapping
                 var emp = _mapper.Map<Employee>(model);
 
-                var Count = _employeeRepository.Add(emp);
+                var Count = _unitOfWork.EmployeeRepository.Add(emp);
                 if (Count > 0)
                 {
                     TempData["Message"] = "Employee Is Created Successfully";
@@ -98,7 +102,7 @@ namespace Company.G03.PL.Controllers
         {
             if (id is null) return BadRequest();
 
-            var Employee = _employeeRepository.Get(id.Value);
+            var Employee = _unitOfWork.EmployeeRepository.Get(id.Value);
 
             if (Employee is null) return NotFound();
 
@@ -110,7 +114,7 @@ namespace Company.G03.PL.Controllers
         [HttpGet]
         public IActionResult Update(int? id)
         {
-            var Departments = _departmentRepository.GetAll();
+            var Departments = _unitOfWork.DepartmentRepository.GetAll();
             ViewData["Department"] = Departments;
             return Details(id, "Update");
         }
@@ -144,7 +148,7 @@ namespace Company.G03.PL.Controllers
                 if (id != emp.Id) return BadRequest();
                 if (ModelState.IsValid)
                 {
-                    var Count = _employeeRepository.Update(emp);
+                    var Count = _unitOfWork.EmployeeRepository.Update(emp);
                     if (Count > 0)
                     {
                         return RedirectToAction(nameof(Index));
@@ -194,7 +198,7 @@ namespace Company.G03.PL.Controllers
                 if (id != emp.Id) return BadRequest();
                 if (ModelState.IsValid)
                 {
-                    var Count = _employeeRepository.Delete(emp);
+                    var Count = _unitOfWork.EmployeeRepository.Delete(emp);
                     if (Count > 0)
                     {
                         return RedirectToAction(nameof(Index));

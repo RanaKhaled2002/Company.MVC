@@ -6,17 +6,18 @@ namespace Company.G03.PL.Controllers
 {
     public class DepartmentController : Controller
     {
-        private readonly IDepartmentRepository _departmentRepository;
+        //private readonly IDepartmentRepository _departmentRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DepartmentController(IDepartmentRepository departmentRepository)
+        public DepartmentController(IUnitOfWork unitOfWork)
         {
-            _departmentRepository = departmentRepository;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var Department = _departmentRepository.GetAll();
+            var Department = _unitOfWork.DepartmentRepository.GetAll();
             return View(Department);
         }
 
@@ -32,7 +33,7 @@ namespace Company.G03.PL.Controllers
         {
             if (ModelState.IsValid)
             {
-                var Count = _departmentRepository.Add(model);
+                var Count = _unitOfWork.DepartmentRepository.Add(model);
                 if (Count > 0)
                 {
                     return RedirectToAction(nameof(Index));
@@ -47,7 +48,7 @@ namespace Company.G03.PL.Controllers
         {
             if (id is null) return BadRequest();
 
-           var Department =  _departmentRepository.Get(id.Value);
+           var Department = _unitOfWork.DepartmentRepository.Get(id.Value);
             
             if(Department is null) return NotFound();
 
@@ -77,7 +78,7 @@ namespace Company.G03.PL.Controllers
                 if (id != model.Id) return BadRequest();
                 if (ModelState.IsValid)
                 {
-                    var Count = _departmentRepository.Update(model);
+                    var Count = _unitOfWork.DepartmentRepository.Update(model);
                     if (Count > 0)
                     {
                         return RedirectToAction(nameof(Index));
@@ -114,7 +115,7 @@ namespace Company.G03.PL.Controllers
                 if (id != model.Id) return BadRequest();
                 if (ModelState.IsValid)
                 {
-                    var Count = _departmentRepository.Delete(model);
+                    var Count = _unitOfWork.DepartmentRepository.Delete(model);
                     if (Count > 0)
                     {
                         return RedirectToAction(nameof(Index));

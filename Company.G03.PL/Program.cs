@@ -1,3 +1,4 @@
+using Company.G03.BLL;
 using Company.G03.BLL.Interfaces;
 using Company.G03.BLL.Repostiories;
 using Company.G03.DAL.Data.Contexts;
@@ -15,8 +16,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 }); // Allow Dependency Injection For AppDbContext
 
-builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
-builder.Services.AddScoped<IEmployeeRepository, EmployeePepository>();
+//builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+//builder.Services.AddScoped<IEmployeeRepository, EmployeePepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddAutoMapper(typeof(EmployeeProfile));
 
 #region Service
