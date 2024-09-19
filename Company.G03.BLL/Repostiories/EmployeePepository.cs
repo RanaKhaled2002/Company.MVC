@@ -17,9 +17,9 @@ namespace Company.G03.BLL.Repostiories
         {
         }
 
-        public IEnumerable<Employee> GetByName(string name)
+        public async Task<IEnumerable<Employee>> GetByNameAsync(string name)
         {
-            return _context.Employees.Include(E => E.WorkFor).AsNoTracking().Where(E => E.Name.ToLower().Contains(name.ToLower())).ToList();
+            return await _context.Employees.Include(E => E.WorkFor).AsNoTracking().Where(E => E.Name.ToLower().Contains(name.ToLower())).ToListAsync();
         }
     }
 }

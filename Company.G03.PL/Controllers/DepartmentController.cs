@@ -15,9 +15,9 @@ namespace Company.G03.PL.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var Department = _unitOfWork.DepartmentRepository.GetAll();
+            var Department = await _unitOfWork.DepartmentRepository.GetAllAsync();
             return View(Department);
         }
 
@@ -29,11 +29,11 @@ namespace Company.G03.PL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult create(Department model)
+        public async Task<IActionResult> create(Department model)
         {
             if (ModelState.IsValid)
             {
-                var Count = _unitOfWork.DepartmentRepository.Add(model);
+                var Count = await _unitOfWork.DepartmentRepository.AddAsync(model);
                 if (Count > 0)
                 {
                     return RedirectToAction(nameof(Index));
@@ -44,11 +44,11 @@ namespace Company.G03.PL.Controllers
         }
 
         [HttpGet]
-        public IActionResult details(int? id, string ViewName = "details")
+        public async Task<IActionResult> details(int? id, string ViewName = "details")
         {
             if (id is null) return BadRequest();
 
-           var Department = _unitOfWork.DepartmentRepository.Get(id.Value);
+           var Department = await _unitOfWork.DepartmentRepository.GetAsync(id.Value);
             
             if(Department is null) return NotFound();
 
@@ -56,7 +56,7 @@ namespace Company.G03.PL.Controllers
         }
 
         [HttpGet]
-        public IActionResult update(int? id)
+        public async Task<IActionResult> update(int? id)
         {
             //if(id is null) return BadRequest();
 
@@ -66,19 +66,19 @@ namespace Company.G03.PL.Controllers
 
             //return View(Department);
 
-            return details(id,"update");
+            return await details(id,"update");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult update([FromRoute]int? id, Department model)
+        public async Task<IActionResult> update([FromRoute]int? id, Department model)
         {
             try
             {
                 if (id != model.Id) return BadRequest();
                 if (ModelState.IsValid)
                 {
-                    var Count = _unitOfWork.DepartmentRepository.Update(model);
+                    var Count = await _unitOfWork.DepartmentRepository.UpdateAsync(model);
                     if (Count > 0)
                     {
                         return RedirectToAction(nameof(Index));
@@ -94,7 +94,7 @@ namespace Company.G03.PL.Controllers
         }
 
         [HttpGet]
-        public IActionResult delete(int? id)
+        public async Task<IActionResult> delete(int? id)
         {
             //if (id is null) return BadRequest();
 
@@ -103,19 +103,19 @@ namespace Company.G03.PL.Controllers
             //if (Department is null) return NotFound();
 
             //return View(Department);
-            return details(id, "delete");
+            return await details(id, "delete");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult delete([FromRoute]int? id,Department model)
+        public async Task<IActionResult> delete([FromRoute]int? id,Department model)
         {
             try
             {
                 if (id != model.Id) return BadRequest();
                 if (ModelState.IsValid)
                 {
-                    var Count = _unitOfWork.DepartmentRepository.Delete(model);
+                    var Count = await _unitOfWork.DepartmentRepository.DeleteAsync(model);
                     if (Count > 0)
                     {
                         return RedirectToAction(nameof(Index));
