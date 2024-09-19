@@ -2,8 +2,10 @@ using Company.G03.BLL;
 using Company.G03.BLL.Interfaces;
 using Company.G03.BLL.Repostiories;
 using Company.G03.DAL.Data.Contexts;
+using Company.G03.DAL.Models;
 using Company.G03.PL.Mapping.Employees;
 using Company.G03.PL.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,7 +22,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 //builder.Services.AddScoped<IEmployeeRepository, EmployeePepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddAutoMapper(typeof(EmployeeProfile));
-
+builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
 #region Service
 builder.Services.AddScoped<IScopedService, ScopedService>();
 builder.Services.AddTransient<ITransientService, TransientService>();

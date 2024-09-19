@@ -11,5 +11,6 @@ namespace Company.G03.DAL.Models
     {
         public string Fname { get; set; }
         public string Lname { get; set; }
+        public bool IsAgree { get; set; }
     }
 }

@@ -760,4 +760,13 @@ input.checkbox {
     .main-w3layouts {
         padding: 1em 0 0;
     }
+
+    .text{
+        color : white;
+
+    }
+    .py-3
+    {
+        padding : 3mm !important;
+    }
 }
