@@ -38,5 +38,9 @@ namespace Company.G03.PL.Models
         public int? WorkForId { get; set; } // FK
 
         public Department? WorkFor { get; set; }
+
+        public string? ImageName { get; set; }
+
+        public IFormFile? Image { get; set; }
     }
 }

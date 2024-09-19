@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Company.G03.BLL.Interfaces;
 using Company.G03.DAL.Models;
+using Company.G03.PL.Helpers;
 using Company.G03.PL.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.ObjectModel;
+using System.Reflection.Metadata;
 
 namespace Company.G03.PL.Controllers
 {
@@ -60,6 +62,8 @@ namespace Company.G03.PL.Controllers
         {
             if (ModelState.IsValid)
             {
+                model.ImageName = DocumentSetting.UploadFile(model.Image, "images");
+
                 #region Manual Mapping
                 // Manual Mapping
 

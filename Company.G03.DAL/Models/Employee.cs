@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -33,5 +34,7 @@ namespace Company.G03.DAL.Models
         public int? WorkForId { get; set; } // FK
 
         public Department? WorkFor { get; set; }
+
+        public string? ImageName { get; set; }
     }
 }
