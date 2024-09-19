@@ -146,13 +146,25 @@ namespace Company.G03.PL.Controllers
                 //}; 
                 #endregion
 
-                // Auto Mapping
-                var emp = _mapper.Map<Employee>(model);
+                if (id != model.Id) return BadRequest();
 
-                if (id != emp.Id) return BadRequest();
                 if (ModelState.IsValid)
                 {
+                    string PrevImage = model.ImageName;
+
+                    if (model.Image != null && model.Image.Length > 0)
+                    {
+                        model.ImageName = DocumentSetting.UploadFile(model.Image, "images");
+                    }
+                    else
+                    {
+                        model.ImageName = PrevImage; 
+                    }
+
+                    var emp = _mapper.Map<Employee>(model);
+
                     var Count = _unitOfWork.EmployeeRepository.Update(emp);
+
                     if (Count > 0)
                     {
                         return RedirectToAction(nameof(Index));
@@ -205,6 +217,7 @@ namespace Company.G03.PL.Controllers
                     var Count = _unitOfWork.EmployeeRepository.Delete(emp);
                     if (Count > 0)
                     {
+                        DocumentSetting.DeleteFile(model.ImageName, "images");
                         return RedirectToAction(nameof(Index));
                     }
                 }
