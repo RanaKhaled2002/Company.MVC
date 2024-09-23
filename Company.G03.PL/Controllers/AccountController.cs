@@ -1,4 +1,5 @@
 ﻿using Company.G03.DAL.Models;
+using Company.G03.PL.Helpers;
 using Company.G03.PL.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -150,11 +151,22 @@ namespace Company.G03.PL.Controllers
 						Subject = "Reset Password",
 						Body = url
 					};
+
+					// 4- Send Email
+					EmailSetting.SendEmail(Email);
+
+					return RedirectToAction(nameof(CheckYourInbox));
 				}
 
 				ModelState.AddModelError(string.Empty, "Invalid Operation, Please Try Again!!");
 			}
 			return View(model);
+		}
+
+		[HttpGet]
+		public IActionResult CheckYourInbox()
+		{
+			return View();
 		}
 		#endregion
 	}
