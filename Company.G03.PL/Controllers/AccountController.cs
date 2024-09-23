@@ -168,6 +168,36 @@ namespace Company.G03.PL.Controllers
 		{
 			return View();
 		}
+
+		[HttpGet]
+		public IActionResult ResetPassword(string email, string token)
+		{
+			TempData["email"] = email;	
+			TempData["token"] = token;
+			return View();
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var email = TempData["email"] as string;
+				var token = TempData["token"] as string;
+
+				var user = await _UserManager.FindByEmailAsync(email);
+				if(user is not null)
+				{
+					var result = await _UserManager.ResetPasswordAsync(user, token, model.Password);
+					if(result.Succeeded)
+					{
+						return RedirectToAction(nameof(SignIn));
+					}
+				}
+			}
+			ModelState.AddModelError(string.Empty, "Invaild Operation, Please Try Again!!");
+			return View(model);
+		}
 		#endregion
 	}
 }
