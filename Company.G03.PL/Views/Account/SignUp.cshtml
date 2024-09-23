@@ -5,29 +5,31 @@
 }
 
 <div class="main-agileinfo">
+	<div asp-validation-summary="All"></div>
+
 	<div class="agileits-top">
 		<form asp-action="SignUp" method="post">
 
 			
-			<input asp-for="UserName" class="form-control" placeholder="User Name" />
+			<input asp-for="UserName" class="form-control" placeholder="User Name" required=""/>
 			
 
 			
-			<input asp-for="FirstName" class="form-control" placeholder="First Name" />
+			<input asp-for="FirstName" class="form-control" placeholder="First Name" required=""/>
 			
 
-			<input asp-for="LastName" class="form-control" placeholder="Last Name" />
+			<input asp-for="LastName" class="form-control" placeholder="Last Name" required=""/>
 				
 
-			<input asp-for="Email" class="form-control" placeholder="Email" />
-				
-
-			
-			<input asp-for="Password" class="form-control" placeholder="Password" />
+			<input asp-for="Email" class="form-control" placeholder="Email" required="" />
 				
 
 			
-			<input asp-for="ConfirmPassword" class="form-control w3lpass" placeholder="Confirmed Password" />
+			<input asp-for="Password" class="form-control" placeholder="Password" required="" />
+				
+
+			
+			<input asp-for="ConfirmPassword" class="form-control w3lpass" placeholder="Confirmed Password" required=""/>
 				
 
 			<div class="wthree-text">
@@ -39,7 +41,7 @@
 			</div>
 			<input type="submit" value="SIGNUP">
 		</form>
-		<p>Don't have an Account? <a asp-action="SignIn"> Login Now!</a></p>
+		<p>You Already Have Account? <a asp-action="SignIn"> Login Now!</a></p>
 	</div>
 </div>
 
