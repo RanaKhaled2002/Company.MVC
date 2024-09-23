@@ -29,6 +29,7 @@ builder.Services.AddTransient<ITransientService, TransientService>();
 builder.Services.AddSingleton<ISingletonService, SingletonService>();
 
 #endregion
+builder.Services.ConfigureApplicationCookie(Config => Config.LoginPath = "/Account/SignIn");
 
 var app = builder.Build();
 
@@ -45,6 +46,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
