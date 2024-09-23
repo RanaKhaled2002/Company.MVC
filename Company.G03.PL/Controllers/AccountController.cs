@@ -2,6 +2,7 @@
 using Company.G03.PL.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Company.G03.PL.Controllers
 {
@@ -117,6 +118,43 @@ namespace Company.G03.PL.Controllers
 		{
 			await _signInManager.SignOutAsync();
 			return RedirectToAction(nameof(SignIn));
+		}
+		#endregion
+
+		#region ForgetPassword
+		[HttpGet]
+		public IActionResult ForgetPassword()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> SendResetPasswordUrl(ForgetPasswordViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var user = await _UserManager.FindByEmailAsync(model.Email);
+
+				if (user is not null)
+				{
+					// 1- Generete Token
+					var token = await _UserManager.GeneratePasswordResetTokenAsync(user);
+
+					// 2- Craete URL
+					var url = Url.Action("ResetPassword", "Account", new { Email = model.Email, Token = token }, Request.Scheme);
+
+					// 3- Create Email
+					var Email = new Email()
+					{
+						To = model.Email,
+						Subject = "Reset Password",
+						Body = url
+					};
+				}
+
+				ModelState.AddModelError(string.Empty, "Invalid Operation, Please Try Again!!");
+			}
+			return View(model);
 		}
 		#endregion
 	}
