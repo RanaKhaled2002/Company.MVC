@@ -112,6 +112,12 @@ namespace Company.G03.PL.Controllers
 		}
 		#endregion
 
-
+		#region SignOut
+		public async Task<IActionResult> SignOut()
+		{
+			await _signInManager.SignOutAsync();
+			return RedirectToAction(nameof(SignIn));
+		}
+		#endregion
 	}
 }
