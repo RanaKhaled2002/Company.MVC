@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Company.G03.PL.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         public RoleManager<IdentityRole> _RoleManager { get; }

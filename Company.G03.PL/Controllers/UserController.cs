@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Company.G03.PL.Controllers
 {
-	[Authorize]
-	public class UserController : Controller
+    [Authorize(Roles = "Admin")]
+    public class UserController : Controller
 	{
 		public UserManager<AppUser> _UserManager { get; }
 
