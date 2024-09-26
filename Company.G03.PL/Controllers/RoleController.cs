@@ -12,10 +12,12 @@ namespace Company.G03.PL.Controllers
     public class RoleController : Controller
     {
         public RoleManager<IdentityRole> _RoleManager { get; }
+        public UserManager<AppUser> _UserManager { get; }
 
-        public RoleController(RoleManager<IdentityRole> roleManager)
+        public RoleController(RoleManager<IdentityRole> roleManager,UserManager<AppUser> userManager)
         {
             _RoleManager = roleManager;
+            _UserManager = userManager;
         }
 
         #region Index
@@ -164,6 +166,40 @@ namespace Company.G03.PL.Controllers
                 ModelState.AddModelError(string.Empty, ex.Message);
             }
             return View(model);
+        }
+        #endregion
+
+        #region Add Or Remove User
+        [HttpGet]
+        public async Task<IActionResult> AddOrRemoveUser(string Id)
+        {
+            if (Id is null) return BadRequest();
+
+            var role = await _RoleManager.FindByIdAsync(Id);
+
+            if(role is null) return NotFound();
+
+            var UserInRole = new List<RolesInUserViewModel>();
+
+            var Users = await _UserManager.Users.ToListAsync();
+
+            foreach (var user in Users) 
+            {
+                var userInRole = new RolesInUserViewModel()
+                {
+                    UserId = user.Id,
+                    UserName = user.UserName
+                };
+
+                if(await _UserManager.IsInRoleAsync(user,role.Name))
+                {
+                    userInRole.IsSelected = true;
+                }
+                else { userInRole.IsSelected = false; }
+
+                UserInRole.Add(userInRole);
+            }
+            return View(UserInRole);
         }
         #endregion
     }

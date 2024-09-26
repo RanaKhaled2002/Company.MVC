@@ -17,6 +17,8 @@
     <partial name="ParitalView/CreateUpdateRole" />
 
     <div class="py-3">
+        <a asp-action="AddOrRemoveUser" asp-route-Id="@Model.Id" class="btn btn-success">Add Or Remove User</a>
+
         <input type="submit" value="Update" class="btn btn-warning text-white" />
         <a asp-action="Index" class="btn btn-light">Back To List</a>
     </div>
