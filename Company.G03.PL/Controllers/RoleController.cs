@@ -179,6 +179,8 @@ namespace Company.G03.PL.Controllers
 
             if(role is null) return NotFound();
 
+            TempData["RoleId"] = Id;
+
             var UserInRole = new List<RolesInUserViewModel>();
 
             var Users = await _UserManager.Users.ToListAsync();
@@ -200,6 +202,38 @@ namespace Company.G03.PL.Controllers
                 UserInRole.Add(userInRole);
             }
             return View(UserInRole);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddOrRemoveUser(string Id, List<RolesInUserViewModel> users)
+        {
+            if (Id is null) return BadRequest();
+
+            var role = await _RoleManager.FindByIdAsync(Id);
+
+            if(role is null) return NotFound();
+
+            if (ModelState.IsValid)
+            {
+                foreach (var user in users)
+                {
+                    var userFromDB = await _UserManager.FindByIdAsync(user.UserId);
+                    if (userFromDB is not null)
+                    {
+                        if(user.IsSelected && ! await _UserManager.IsInRoleAsync(userFromDB,role.Name))
+                        {
+                            await _UserManager.AddToRoleAsync(userFromDB,role.Name);
+                        }
+                        else if (!user.IsSelected && await _UserManager.IsInRoleAsync(userFromDB, role.Name))
+                        {
+                            await _UserManager.RemoveFromRoleAsync(userFromDB,role.Name);
+                        }
+                    }
+                }
+
+                return RedirectToAction(nameof(Update),new {Id = Id});
+            }
+            return View(users);
         }
         #endregion
     }
